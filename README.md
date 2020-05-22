@@ -46,6 +46,10 @@ Replace `MY-PRECIOUS` with the string generated in both cases.
 
 Unless you used a different DB name, you do not need to change `DATABASE_URL`
 
+# Initialize your data models
+
+`python manage.py db upgrade`
+
 # Initialize some data
 
 `python initialize.py roles`
@@ -53,3 +57,4 @@ Unless you used a different DB name, you do not need to change `DATABASE_URL`
 
 At this time you cannot initialize other data. Please review the API documentation in Postman and POST from there.
 
+Good luck! And remember...Read the source Luke!
