@@ -11,6 +11,7 @@ from flask_bcrypt import Bcrypt
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager
 from flask_jwt_extended import jwt_required, get_raw_jwt
+from flask_migrate import Migrate
 
 from api.db import db
 from api.ma import ma
@@ -18,6 +19,7 @@ from api.ma import ma
 bcrypt = Bcrypt()
 jwt = JWTManager()
 cors = CORS()
+migrate = Migrate()
 
 def create_app():
 
@@ -47,9 +49,24 @@ def create_app():
 
     db.init_app(app)
     ma.init_app(app)
+    migrate.init_app(app, db)
     bcrypt.init_app(app)
     jwt.init_app(app)
     cors.init_app(app)
+
+    # Blueprints
+
+    from api.auth import auth_bp
+    app.register_blueprint(auth_bp)
+
+    # Custom Views
+
+    @app.route('/hello/')
+    @app.route('/hello/<string:name>')
+    def hello(name=None):
+        if name:
+            return jsonify({'message': 'Hi {}!'.format(name)})
+        return jsonify({'message': 'Hello World!'})
 
     with app.app_context():
 
@@ -86,7 +103,6 @@ def create_app():
 
         api_category_list = CategoryListView.as_view('api_category_list')
         app.add_url_rule('/category/', view_func=api_category_list, methods=['GET', 'POST', ])
-
 
         user_auth = UserView.as_view('user_auth')
         app.add_url_rule('/auth/user/<int:user_id>', view_func=user_auth, methods=['GET', 'DELETE', ])
@@ -130,12 +146,6 @@ def create_app():
         change_password = ChangePasswordView.as_view('change_password')
         app.add_url_rule('/auth/change-password', view_func=change_password, methods=['POST', ])
 
-        # Blueprints
-
-        from api.auth import auth_bp
-
-        app.register_blueprint(auth_bp)
-
         # Authentication
 
         @jwt.token_in_blacklist_loader
@@ -160,19 +170,9 @@ def create_app():
 
         app.register_error_handler(403, permission_denied)
 
-        # Custom Views
-
-        @app.route('/hello/')
-        @app.route('/hello/<string:name>')
-        def hello(name=None):
-            if name:
-                return jsonify({'message':'Hi {}!'.format(name)})
-            return jsonify({'message':'Hello World!'})
-
-
+        # Commands
 
         from api.initialize import initialize_cli
-
         app.cli.add_command(initialize_cli)
 
         return app

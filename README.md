@@ -48,7 +48,7 @@ Unless you used a different DB name, you do not need to change `DATABASE_URL`
 
 # Initialize your data models
 
-`python manage.py db upgrade`
+`flask db upgrade`
 
 # Initialize some data
 

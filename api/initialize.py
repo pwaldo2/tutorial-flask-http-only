@@ -2,7 +2,7 @@ import click
 import csv
 import os
 
-from flask import Blueprint, current_app
+from flask import current_app
 from flask.cli import with_appcontext
 from flask.cli import AppGroup
 
