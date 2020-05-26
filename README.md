@@ -52,9 +52,10 @@ Unless you used a different DB name, you do not need to change `DATABASE_URL`
 
 # Initialize some data
 
-`python initialize.py roles`
-`python initialize.py company`
-
-At this time you cannot initialize other data. Please review the API documentation in Postman and POST from there.
+```
+flask initialize roles
+flask initialize company
+flask initialize user
+```
 
 Good luck! And remember...Read the source Luke!
