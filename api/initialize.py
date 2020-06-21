@@ -36,7 +36,6 @@ def roles():
                {'name': 'USER', 'description': 'User role has content creation access'},
                ]
 
-    entries = [{'name': 'TEST', 'description': 'Test role has content creation access'},]
     print('Seeding DB with standard roles...')
 
     with current_app.test_request_context('/auth/role/'):

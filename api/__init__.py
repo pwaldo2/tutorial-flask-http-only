@@ -179,20 +179,20 @@ def create_app():
 
         # Handle CORS
 
-        def add_cors_headers(response):
-            response.headers['Access-Control-Allow-Origin'] = '*'
-            if request.headers['Origin'] in CORS_ORIGIN_WHITELIST:
-                response.headers['Access-Control-Allow-Origin'] = request.headers['Origin']
-            if request.method == 'OPTIONS':
-                response.headers['Access-Control-Allow-Methods'] = 'DELETE, GET, POST, PUT'
-                headers = request.headers.get('Access-Control-Request-Headers')
-                if headers:
-                    response.headers['Access-Control-Allow-Headers'] = headers
-                    response.headers.add('Access-Control-Allow-Headers', 'X-Requested-With')
-            print(response.headers)
-            return response
-
-        app.after_request(add_cors_headers)
+        # def add_cors_headers(response):
+        #     response.headers['Access-Control-Allow-Origin'] = '*'
+        #     if request.headers['Origin'] in CORS_ORIGIN_WHITELIST:
+        #         response.headers['Access-Control-Allow-Origin'] = request.headers['Origin']
+        #     if request.method == 'OPTIONS':
+        #         response.headers['Access-Control-Allow-Methods'] = 'DELETE, GET, POST, PUT'
+        #         headers = request.headers.get('Access-Control-Request-Headers')
+        #         if headers:
+        #             response.headers['Access-Control-Allow-Headers'] = headers
+        #             response.headers.add('Access-Control-Allow-Headers', 'X-Requested-With')
+        #     print(response.headers)
+        #     return response
+        #
+        # app.after_request(add_cors_headers)
 
         # Error Handlers
 
