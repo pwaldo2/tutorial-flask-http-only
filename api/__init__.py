@@ -21,6 +21,13 @@ jwt = JWTManager()
 cors = CORS()
 migrate = Migrate()
 
+CORS_ORIGIN_WHITELIST = [
+    'http://localhost:5000',
+    'http://0.0.0.0:5000',
+    'http://localhost:3000',
+    'http://0.0.0.0:3000',
+]
+
 def create_app():
 
     app = Flask(__name__)
@@ -163,6 +170,24 @@ def create_app():
                 'company_id': UserModel.find_by_id(_id=identity).company_id,
                 'roles': [role.name for role in UserModel.find_by_id(_id=identity).roles]
             }
+
+        # Handle CORS
+
+        def add_cors_headers(response):
+            response.headers['Access-Control-Allow-Origin'] = '*'
+            if request.headers['Origin'] in CORS_ORIGIN_WHITELIST:
+                response.headers['Access-Control-Allow-Origin'] = request.headers['Origin']
+            if request.method == 'OPTIONS':
+                response.headers['Access-Control-Allow-Methods'] = 'DELETE, GET, POST, PUT'
+                headers = request.headers.get('Access-Control-Request-Headers')
+                if headers:
+                    response.headers['Access-Control-Allow-Headers'] = headers
+                    response.headers.add('Access-Control-Allow-Headers', 'X-Requested-With')
+            return response
+
+        app.after_request(add_cors_headers)
+
+        # Error Handlers
 
         @app.errorhandler(403)
         def permission_denied(e):

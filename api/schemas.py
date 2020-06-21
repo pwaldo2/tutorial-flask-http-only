@@ -21,7 +21,6 @@ class ArticlePostSchema(ma.SQLAlchemyAutoSchema):
         include_fk = True
         load_instance = True
         include_relationships = True
-        sqla_session = db.session
 
 
 class CategorySchema(ma.SQLAlchemyAutoSchema):
