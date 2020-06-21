@@ -60,11 +60,12 @@ def create_app():
     migrate.init_app(app, db)
     bcrypt.init_app(app)
     jwt.init_app(app)
-    cors.init_app(app)
+    cors.init_app(app, supports_credentials=True)
 
     # Blueprints
 
     from api.auth import auth_bp
+    CORS(auth_bp, supports_credentials=True)
     app.register_blueprint(auth_bp)
 
     # Custom Views
@@ -174,19 +175,24 @@ def create_app():
 
         # Handle CORS
 
-        def add_cors_headers(response):
-            response.headers['Access-Control-Allow-Origin'] = '*'
-            if request.headers['Origin'] in CORS_ORIGIN_WHITELIST:
-                response.headers['Access-Control-Allow-Origin'] = request.headers['Origin']
-            if request.method == 'OPTIONS':
-                response.headers['Access-Control-Allow-Methods'] = 'DELETE, GET, POST, PUT'
-                headers = request.headers.get('Access-Control-Request-Headers')
-                if headers:
-                    response.headers['Access-Control-Allow-Headers'] = headers
-                    response.headers.add('Access-Control-Allow-Headers', 'X-Requested-With')
-            return response
-
-        app.after_request(add_cors_headers)
+        # def add_cors_headers(response):
+        #     response.headers['Access-Control-Allow-Origin'] = '*'
+        #     if request.headers['Origin'] in CORS_ORIGIN_WHITELIST:
+        #         response.headers['Access-Control-Allow-Origin'] = request.headers['Origin']
+        #     if request.method == 'OPTIONS':
+        #         response.headers['Access-Control-Allow-Methods'] = 'DELETE, GET, POST, PUT'
+        #         headers = request.headers.get('Access-Control-Request-Headers')
+        #         if headers:
+        #             response.headers['Access-Control-Allow-Headers'] = headers
+        #             response.headers.add('Access-Control-Allow-Headers', 'X-Requested-With')
+        #             response.headers.add('Access-Control-Allow-Headers', 'Authorization')
+        #             response.headers.add('Access-Control-Allow-Credentials', 'true')
+        #             response.headers.add('Access-Control-Allow-Headers', 'Content-Type')
+        #             response.headers.add('Access-Control-Allow-Headers', 'Cache-Control')
+        #     print(response.headers)
+        #     return response
+        #
+        # app.after_request(add_cors_headers)
 
         # Error Handlers
 
