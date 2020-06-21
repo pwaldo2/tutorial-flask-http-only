@@ -60,12 +60,16 @@ def create_app():
     migrate.init_app(app, db)
     bcrypt.init_app(app)
     jwt.init_app(app)
-    cors.init_app(app, supports_credentials=True)
+    cors.init_app(app,
+                  origins=CORS_ORIGIN_WHITELIST,
+                  supports_credentials=True)
 
     # Blueprints
 
     from api.auth import auth_bp
-    CORS(auth_bp, supports_credentials=True)
+    CORS(auth_bp,
+         origins=CORS_ORIGIN_WHITELIST,
+         supports_credentials=True)
     app.register_blueprint(auth_bp)
 
     # Custom Views
