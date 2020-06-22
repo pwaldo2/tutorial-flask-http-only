@@ -27,6 +27,8 @@ CORS_ORIGIN_WHITELIST = [
     'http://0.0.0.0:5000',
     'http://localhost:3000',
     'http://0.0.0.0:3000',
+    'http://localhost',
+    'http://0.0.0.0',
 ]
 
 def create_app():
