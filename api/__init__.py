@@ -45,7 +45,7 @@ def create_app():
     app.config['BCRYPT_LOG_ROUNDS'] = 15
     app.config['JWT_TOKEN_LOCATION'] = ['cookies']
     app.config['JWT_COOKIE_SECURE'] = True
-    app.config['JWT_ACCESS_COOKIE_PATH'] = '/'
+    app.config['JWT_ACCESS_COOKIE_PATH'] = '/api'
     app.config['JWT_REFRESH_COOKIE_PATH'] = '/auth/refresh/'
     app.config['JWT_COOKIE_CSRF_PROTECT'] = True
     app.config['JWT_CSRF_CHECK_FORM'] = True
@@ -114,7 +114,7 @@ def create_app():
         from api.auth.resources import ChangePasswordView
 
         api_article_list = ArticleListView.as_view('api_article_list')
-        app.add_url_rule('/article/', view_func=api_article_list, methods=['GET', 'POST', ])
+        app.add_url_rule('/api/article/', view_func=api_article_list, methods=['GET', 'POST', ])
 
         api_category_list = CategoryListView.as_view('api_category_list')
         app.add_url_rule('/category/', view_func=api_category_list, methods=['GET', 'POST', ])
