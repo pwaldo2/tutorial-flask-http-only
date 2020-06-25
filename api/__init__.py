@@ -45,7 +45,7 @@ def create_app():
     app.config['BCRYPT_LOG_ROUNDS'] = 15
     app.config['JWT_TOKEN_LOCATION'] = ['cookies']
     app.config['JWT_COOKIE_SECURE'] = True
-    app.config['JWT_ACCESS_COOKIE_PATH'] = '/api/'
+    app.config['JWT_ACCESS_COOKIE_PATH'] = '/'
     app.config['JWT_REFRESH_COOKIE_PATH'] = '/auth/refresh/'
     app.config['JWT_COOKIE_CSRF_PROTECT'] = True
     app.config['JWT_CSRF_CHECK_FORM'] = True
