@@ -1,6 +1,6 @@
 alembic==1.0.11
 attrs==19.1.0
-Babel==2.7.0
+Babel==2.9.1
 bcrypt==3.1.7
 blinker==1.4
 cffi==1.13.1
